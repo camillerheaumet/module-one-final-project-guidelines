@@ -45,8 +45,6 @@ def run
     data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
     p count_crimes(data)
 
-
-
   end
 
 end

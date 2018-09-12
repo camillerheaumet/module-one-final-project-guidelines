@@ -20,29 +20,42 @@ def loading_session
 end
 
 
+def exit_app
+  puts "See you next time!"
+end
 
-
-
-
+def get_username
+  gets.chomp.downcase
+end
 
 def sign_up
-  puts "Please enter your name:"
-  user_name = gets.chomp.downcase
-  if User.all.find{|user| user.name == user_name}
-    puts "User name already exists, please choose a different one or sign in."
-
-  else
-    User.create(name: user_name)
+  should_continue = true
+  while should_continue do
+    puts 'Please enter your name:'
+    user_name = get_username
+    if User.all.find{ |user| user.name == user_name }
+      puts 'That username exists, please enter a new one:'
+      user_name = get_username
+    else
+      user = User.create(name: user_name)
+      should_continue = false
+    end
   end
+  user
 end
 
 def log_in
-  puts "Please enter your name:"
-  user_name = gets.chomp.downcase
-  user = User.find_by(name: user_name)
-  if !user
-    puts "User name not found, please sign up."
-  end
+  should_continue = true
+  while should_continue do
+    puts "Please enter your name:"
+    user_name = get_username   # method defined separately
+    user = User.find_by(name: user_name)
+    if !user
+      puts "User name not found, please try again"
+    else
+      should_continue = false
+    end
+  end 
   user
 end
 
