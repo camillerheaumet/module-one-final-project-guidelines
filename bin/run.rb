@@ -10,7 +10,22 @@ require 'pry'
 
 def run
   puts "Hello, welcome to UK Crime report app!"
-  @user = create_user
+  loading_session
+  print "Would you like to SIGN UP or LOG IN? Please input 's' or 'l':"
+  input = gets.chomp.downcase
+  case input
+  when "s"
+    @user = sign_up
+    puts "Your username is #{@user.name}"
+  #  Need to
+  when "l"
+    @user = log_in
+    puts "Welcome back #{@user.name}! You successfully logged in!"
+  end
+  loading_session
+  # binding.pry
+
+  # @user = create_user
   # fix if person has been created or not - user_id within Area class should not be duplicated
   new_area = Area.create(address: get_address, user: @user )
   help
@@ -29,6 +44,8 @@ def run
   when "c"
     data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
     p count_crimes(data)
+
+
 
   end
 
