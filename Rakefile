@@ -23,3 +23,9 @@ task :console => :environment do
   ActiveRecord::Base.logger = Logger.new(STDOUT)
   Pry.start
 end
+
+desc 'runs run.rb'
+task :run do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  load "./bin/run.rb"
+end

@@ -1,12 +1,11 @@
 require 'rest-client'
 
-
 class Area < ActiveRecord::Base
   extend Geocoder::Model::ActiveRecord
-  geocoded_by :address
-  before_create :geocode
-  has_many :crimes
-  belongs_to :users
+    geocoded_by :address
+    before_create :geocode
+    has_many :crimes
+    belongs_to :users
 
 
 #  Method to convert inputted address into coordinates
