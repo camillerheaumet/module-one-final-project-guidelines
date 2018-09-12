@@ -20,7 +20,7 @@ def run
   #  Need to
   when "l"
     @user = log_in
-    puts "Welcome back #{@user.name}! You successfully logged in!"
+    puts "Welcome back #{@user.name}! You have logged in successfully!"
   end
   loading_session
   # binding.pry
@@ -38,13 +38,19 @@ def run
 
   when "b"
     data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
-    crime_categories(data)   # this works
-
+    puts crime_categories(data).uniq   # this works
 
   when "c"
     data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
     p count_crimes(data)
 
+  when "d"
+    data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
+    puts "-----------"
+    categories_and_count(data).each do |cat|
+      puts cat
+      puts "-----------"
+    end
   end
 
 end

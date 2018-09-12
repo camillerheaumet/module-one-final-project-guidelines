@@ -35,7 +35,7 @@ def sign_up
     user_name = get_username
     if User.all.find{ |user| user.name == user_name }
       puts 'That username exists, please enter a new one:'
-      user_name = get_username
+      user = user_name
     else
       user = User.create(name: user_name)
       should_continue = false
@@ -55,7 +55,7 @@ def log_in
     else
       should_continue = false
     end
-  end 
+  end
   user
 end
 
@@ -69,9 +69,19 @@ def crime_categories(data)    # Option b
   data.each do |crime|
     categories << crime["category"]
   end
-  puts categories.uniq
+  categories
 end
 
-def count_crimes(data)
+def count_crimes(data)      # Option c
   data.size
 end
+
+
+def categories_and_count(data)
+  crime_categories(data).each_with_object(Hash.new(0)) do |category, count|
+    count[category] += 1
+  end
+end
+
+
+# (d) - See a report of the crime categories and the number of times committed
