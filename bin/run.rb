@@ -30,28 +30,30 @@ def run
   new_area = Area.create(address: get_address, user: @user )
   help
   option = gets.chomp
+  data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
   case option
-
   when "a"
-    data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
-    p data
+    puts data
 
   when "b"
-    data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
     puts crime_categories(data).uniq   # this works
 
   when "c"
-    data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
     p count_crimes(data)
 
   when "d"
-    data = CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
     puts "-----------"
     categories_and_count(data).each do |cat|
       puts cat
       puts "-----------"
     end
+
+  when "e"
+    p outcome_categories(data)
+
+
   end
+
 
 end
 
