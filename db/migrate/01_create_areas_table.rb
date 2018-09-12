@@ -4,6 +4,7 @@ class CreateAreasTable < ActiveRecord::Migration[5.1]
       t.string :address
       t.string :latitude
       t.string :longitude
+      t.references :user, foreign_key: true
     end
   end
 end

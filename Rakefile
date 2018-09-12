@@ -1,5 +1,12 @@
 require 'active_record'
-require 'pry'
+require_relative './config/environment'
+require 'sinatra/activerecord/rake'
+
+desc 'starts a console'
+task :console => :environment do
+  ActiveRecord::Base.logger = Logger.new(STDOUT)
+  Pry.start
+end
 
 task :environment do
   ENV["ACTIVE_RECORD_ENV"] ||= "development"
@@ -13,19 +20,4 @@ seed_loader = Class.new do
   def load_seed
     load "#{ActiveRecord::Tasks::DatabaseTasks.db_dir}/seeds.rb"
   end
-end
-
-DatabaseTasks.seed_loader = seed_loader.new
-load 'active_record/railties/databases.rake'
-
-desc 'starts a console'
-task :console => :environment do
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-  Pry.start
-end
-
-desc 'runs run.rb'
-task :run do
-  ActiveRecord::Base.logger = Logger.new(STDOUT)
-  load "./bin/run.rb"
 end
