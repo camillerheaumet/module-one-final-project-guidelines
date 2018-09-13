@@ -24,9 +24,6 @@ def run
   end
   loading_session
   # binding.pry
-
-  # @user = create_user
-  # fix if person has been created or not - user_id within Area class should not be duplicated
   new_area = Area.create(address: get_address, user: @user )
   help
   option = gets.chomp
@@ -49,8 +46,7 @@ def run
     end
 
   when "e"
-    p outcome_categories(data)
-
+    outcome_categories(data)
 
   end
 

@@ -83,6 +83,8 @@ def categories_and_count(data) #Option d
   crime_categories(data).each {|category| hash[category] += 1 }
   hash.sort_by {|cat, count| count }.reverse
 end
+
+
 #
 # def categories_and_outcome(data)
 #   new_data = {}
@@ -131,16 +133,58 @@ end
 # end
 
 
-#
+
+def outcome_categories(data)
+  new_array = []
+  new_hash = {}
+  data.each do |crime|
+    if crime["outcome_status"]
+     new_hash = {crime["category"] => {crime["outcome_status"]["category"] => 1}}
+     new_array << new_hash
+   else
+    new_hash = {crime["category"] => {"no_outcome" => 1}}
+    new_array << new_hash
+   end
+  end
+  p new_array
+end
+
+
 # def outcome_categories(data)
+#   new_array = []
 #   new_hash = {}
 #   data.each do |crime|
-#     crime.each do |field, field_value|
-#       binding.pry
-#       p "hi"
-#     end
+#     if crime["outcome_status"]
+#      new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {crime["outcome_status"]["category"] => 1}}}
+#      new_array << new_hash
+#    else
+#     new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {"no_outcome" => 1}}}
+#     new_array << new_hash
+#    end
+#
+#     # crime.each do |field, field_value|
+#       # if new_hash["category"] == crime["category"]
+#       #   # binding.pry
+#       #   if !crime["outcome_status"]
+#       #     if new_hash["outcome_status"]["category"]["no_outcome"]
+#       #       new_hash["outcome_status"]["category"]["no_outcome"] += 1
+#       #     else
+#       #       new_hash["outcome_status"]["category"]["no_outcome"] = 1
+#       #     end
+#       #   elsif new_hash["outcome_status"]["category"]["#{crime["outcome_status"]["category"]}"]
+#       #     new_hash["outcome_status"]["category"]["#{crime["outcome_status"]["category"]}"] += 1
+#       #   else
+#       #     new_hash["outcome_status"]["category"][crime["outcome_status"]["category"]] = 1
+#       #   end
+#       # elsif !crime["outcome_status"]
+#       #   new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {"no_outcome" => 1}}}
+#       # else
+#       #   new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {crime["outcome_status"]["category"] => 1}}}
+#       # end
+#     # end
+#       # binding.pry
 #   end
-#   p "hi"
+#   p new_array
 # end
 
   # (e) - See all instances of crime by their categories and their respective outcomes
