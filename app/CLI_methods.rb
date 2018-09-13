@@ -3,12 +3,12 @@ require 'pry'
 
 def help
   puts "
-  Please select from the following options- using numbers (a - d) as your input:
-  - (a) - See all data (unformatted)
-  - (b) - See all crime categories reported in your chosen area
-  - (c) - Count the number of crimes in your chosen area
-  - (d) - See a report of the crime categories and the number of times committed
-  - (e) - See all instances of crime by their categories and their respective outcomes
+  Please select from the following options- using letters (a - d) as your input:
+  - (a) - See all crime categories reported in your chosen area
+  - (b) - Count the number of crimes in your chosen area
+  - (c) - See a report of the crime categories and the number of times committed
+  - (d) - See all instances of crime by their categories and their respective outcomes
+  - (exit) - Exit the app
   "
 end
 
@@ -29,6 +29,8 @@ def get_username
   gets.chomp.downcase
 end
 
+
+
 def sign_up
   should_continue = true
   while should_continue do
@@ -36,7 +38,6 @@ def sign_up
     user_name = get_username
     if User.all.find{ |user| user.name == user_name }
       puts 'That username exists, please enter a new one:'
-      user = user_name
     else
       user = User.create(name: user_name)
       should_continue = false
@@ -51,8 +52,11 @@ def log_in
     puts "Please enter your name:"
     user_name = get_username   # method defined separately
     user = User.find_by(name: user_name)
-    if !user
-      puts "User name not found, please try again"
+    if user_name == "exit"
+      should_continue = false
+      sign_or_log
+    elsif !user
+      puts "User name not found, please try again or type 'exit' to go back"
     else
       should_continue = false
     end
@@ -85,106 +89,24 @@ def categories_and_count(data) #Option d
 end
 
 
-#
-# def categories_and_outcome(data)
-#   new_data = {}
-#
-#   data.each do |field, field_value|
-#     field_value.each do |info|
-#
-#       new_data[in]
-# end
-
-
-# def outcome_categories(data)
-#   new_hash = {}
-#   data.each do |crime|
-#     crime.each do |field, field_value|
-#       if new_hash["outcome_status"]
-#         new_hash["outcome_status"]["category"] << field
-#
-#
-#
-#       new_hash[field_value["outcome_status"]["category"]]
-#         binding.pry
-#       ## if new_hash[field_value].first
-#       ##   new_hash[field_value]
-#       ## if new_hash["outcome_status"][field_value]
-#       p "hi"
-#     end
-#   end
-#   p "hi"
-# end
-
-# def outcome_categories(data)
-#   new_hash = {}
-#   data.each do |crime|
-#     crime.each do |field, field_value|
-#       ["category"].each do |info, precise|
-#         binding.pry
-#       # if new_hash[field_value].first
-#       #   new_hash[field_value]
-#       # if new_hash["outcome_status"][field_value]
-#       end
-#       p "hi"
-#     end
-#   end
-#   p "hi"
-# end
-
-
-
-def outcome_categories(data)
+def categories_and_outcomes(data)  #Option e
   new_array = []
   new_hash = {}
   data.each do |crime|
     if crime["outcome_status"]
-     new_hash = {crime["category"] => {crime["outcome_status"]["category"] => 1}}
+     new_hash = {crime["category"] => crime["outcome_status"]["category"]}
      new_array << new_hash
    else
-    new_hash = {crime["category"] => {"no_outcome" => 1}}
+    new_hash = {crime["category"] => "no_outcome"}
     new_array << new_hash
    end
   end
-  p new_array
+  hash = Hash.new
+  new_array.each do |crime_hash|
+    crime_hash.each do |key, value|
+      hash[key] ||= Hash.new(0)
+      hash[key][value] += 1
+    end
+  end
+hash
 end
-
-
-# def outcome_categories(data)
-#   new_array = []
-#   new_hash = {}
-#   data.each do |crime|
-#     if crime["outcome_status"]
-#      new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {crime["outcome_status"]["category"] => 1}}}
-#      new_array << new_hash
-#    else
-#     new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {"no_outcome" => 1}}}
-#     new_array << new_hash
-#    end
-#
-#     # crime.each do |field, field_value|
-#       # if new_hash["category"] == crime["category"]
-#       #   # binding.pry
-#       #   if !crime["outcome_status"]
-#       #     if new_hash["outcome_status"]["category"]["no_outcome"]
-#       #       new_hash["outcome_status"]["category"]["no_outcome"] += 1
-#       #     else
-#       #       new_hash["outcome_status"]["category"]["no_outcome"] = 1
-#       #     end
-#       #   elsif new_hash["outcome_status"]["category"]["#{crime["outcome_status"]["category"]}"]
-#       #     new_hash["outcome_status"]["category"]["#{crime["outcome_status"]["category"]}"] += 1
-#       #   else
-#       #     new_hash["outcome_status"]["category"][crime["outcome_status"]["category"]] = 1
-#       #   end
-#       # elsif !crime["outcome_status"]
-#       #   new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {"no_outcome" => 1}}}
-#       # else
-#       #   new_hash = {"category" => crime["category"], "outcome_status" => {"category" => {crime["outcome_status"]["category"] => 1}}}
-#       # end
-#     # end
-#       # binding.pry
-#   end
-#   p new_array
-# end
-
-  # (e) - See all instances of crime by their categories and their respective outcomes
