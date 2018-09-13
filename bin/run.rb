@@ -56,6 +56,11 @@ def run
         puts "-----------"
       end
 
+    when "new"
+      system("clear")
+      new_area = Area.create(address: get_address, user: @user )
+
+
     when "exit"
       continue_research = false
       loading_session

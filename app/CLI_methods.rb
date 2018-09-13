@@ -8,6 +8,7 @@ def help
   - (b) - Count the number of crimes in your chosen area
   - (c) - See a report of the crime categories and the number of times committed
   - (d) - See all instances of crime by their categories and their respective outcomes
+  - (new) - Enter a new Postcode
   - (exit) - Exit the app
   "
 end
