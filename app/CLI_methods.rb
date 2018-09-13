@@ -21,7 +21,6 @@ def loading_session
   puts ""
 end
 
-
 def exit_app
   puts "See you next time!"
 end
@@ -110,4 +109,13 @@ def categories_and_outcomes(data)  #Option e
     end
   end
 hash
+end
+
+def easter_egg
+  "B O B B Y".split(" ").each {|char| print char; sleep 0.25; $stdout.flush }
+  puts ""
+  "- - & - -".split(" ").each {|char| print char; sleep 0.25; $stdout.flush }
+  puts ""
+  "- C A M -".split(" ").each {|char| print char; sleep 0.25; $stdout.flush }
+  puts ""
 end

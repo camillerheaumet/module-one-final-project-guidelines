@@ -64,10 +64,21 @@ def run
     when "exit"
       continue_research = false
       loading_session
+      system("clear")
       puts "Goodbye!"
       break
-    end
 
+# easter egg
+                                                                                                                                                  when "wait"        # easter egg
+                                                                                                                                                    2.times do
+                                                                                                                                                      loading_session
+                                                                                                                                                    end
+                                                                                                                                                    easter_egg
+                                                                                                                                                    1.times do
+                                                                                                                                                      loading_session
+                                                                                                                                                    end
+
+    end
   end  # end of while loop
 
 end
