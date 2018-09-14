@@ -36,9 +36,11 @@ def sign_up
   while should_continue do
     puts 'Please enter your name:'
     user_name = get_username
-    if User.all.find{ |user| user.name == user_name }
+    if user_name == "exit"
+      should_continue = false
+      sign_or_log
+    elsif User.all.find{ |user| user.name == user_name }
       puts 'That username exists, please enter a new one:'
-      #user = user_name
     else
       user = User.create(name: user_name)
       should_continue = false

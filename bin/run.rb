@@ -18,18 +18,7 @@ def sign_or_log
     end
 end
 
-def data_search
-  true_data = true
-  while true_data do
-    new_area = Area.create(address: get_address, user: @user )
-    if !!@user.areas.last.latitude
-      true_data = false
-    else
-      puts "This Postcode is NOT valid."
-    end
- end
- CrimeData.get_crimes_for_location(@user.areas.last.latitude, @user.areas.last.longitude)
-end
+
 
 def run
   puts "Hello, welcome to UK Crime report app!"
