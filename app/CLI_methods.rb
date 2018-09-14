@@ -38,6 +38,7 @@ def sign_up
     user_name = get_username
     if User.all.find{ |user| user.name == user_name }
       puts 'That username exists, please enter a new one:'
+      #user = user_name
     else
       user = User.create(name: user_name)
       should_continue = false
